@@ -1,0 +1,145 @@
+[gd_scene load_steps=11 format=3 uid="uid://bd0gdgfgyqxb5"]
+
+[ext_resource type="Script" path="res://guerra_ocells.gd" id="1_nrlma"]
+[ext_resource type="Texture2D" uid="uid://crgqf8ki6rb2i" path="res://kisscc0-flappy-bird-tap-2d-computer-graphics-jump-bird-jum-flying-bird-9-frame-1-5cadb87ce10009.2147683715548888289216.png" id="1_yxw3b"]
+[ext_resource type="Script" path="res://Menu.gd" id="2_3bqy5"]
+[ext_resource type="Script" path="res://Escenari.gd" id="2_maqur"]
+[ext_resource type="Script" path="res://ocell.gd" id="2_xdebi"]
+[ext_resource type="Texture2D" uid="uid://edlk0l8em4wh" path="res://70bf057fc74ec01a2190ec5e4d77064b.png" id="3_b700a"]
+[ext_resource type="Script" path="res://ocell2.gd" id="4_5vohr"]
+[ext_resource type="Texture2D" uid="uid://p5ca7pxbxqik" path="res://toppng.com-flappy-bird-bird-703x527.png" id="7_krkh7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlw12"]
+size = Vector2(1929, 36)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w78h8"]
+radius = 24.25
+height = 68.0
+
+[node name="GuerraOcells" type="Node2D"]
+script = ExtResource("1_nrlma")
+
+[node name="Escenari" type="Node2D" parent="."]
+script = ExtResource("2_maqur")
+
+[node name="Puntuació" type="Label" parent="Escenari"]
+modulate = Color(0, 0, 0, 1)
+top_level = true
+offset_left = 409.0
+offset_top = 4.0
+offset_right = 626.0
+offset_bottom = 52.0
+tooltip_text = "exemple
+"
+mouse_filter = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="70Bf057Fc74Ec01a2190Ec5e4d77064b" type="Sprite2D" parent="Escenari"]
+position = Vector2(575.5, 322.5)
+scale = Vector2(0.740625, 0.811681)
+texture = ExtResource("3_b700a")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Escenari"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Escenari/StaticBody2D"]
+position = Vector2(490.5, 636)
+shape = SubResource("RectangleShape2D_tlw12")
+one_way_collision_margin = 3.3
+
+[node name="Comptador" type="Timer" parent="Escenari"]
+wait_time = 10.0
+
+[node name="LabelComptador" type="Label" parent="Escenari"]
+offset_left = 913.0
+offset_top = 4.0
+offset_right = 1148.0
+offset_bottom = 71.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="ÚltimaPuntuació" type="Label" parent="Escenari"]
+offset_left = 503.0
+offset_top = 446.0
+offset_right = 615.0
+offset_bottom = 506.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="Menu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_3bqy5")
+
+[node name="JUGAR" type="Button" parent="Menu"]
+layout_mode = 0
+offset_left = 501.0
+offset_top = 324.0
+offset_right = 651.0
+offset_bottom = 374.0
+focus_neighbor_bottom = NodePath("../SORTIR")
+text = "JUGAR"
+icon_alignment = 1
+
+[node name="SORTIR" type="Button" parent="Menu"]
+layout_mode = 0
+offset_left = 501.0
+offset_top = 391.0
+offset_right = 651.0
+offset_bottom = 441.0
+text = "SORTIR"
+
+[node name="OcellJugador" type="Node2D" parent="."]
+top_level = true
+
+[node name="ocell" type="RigidBody2D" parent="OcellJugador"]
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("2_xdebi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OcellJugador/ocell"]
+position = Vector2(29, 4.75002)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_w78h8")
+
+[node name="Kisscc0-flappy-bird-tap-2d-computer-graphics-jump-bird-jum-flying-bird-9-frame-1-5Cadb87Ce10009_2147683715548888289216" type="Sprite2D" parent="OcellJugador/ocell"]
+position = Vector2(25, -2)
+scale = Vector2(0.08, 0.0853333)
+texture = ExtResource("1_yxw3b")
+
+[node name="Ocellordinador" type="Node2D" parent="."]
+top_level = true
+
+[node name="ocell2" type="RigidBody2D" parent="Ocellordinador"]
+rotation = 3.14159
+scale = Vector2(1, -1)
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("4_5vohr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ocellordinador/ocell2"]
+position = Vector2(-29, 5.00007)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_w78h8")
+
+[node name="Kisscc0-flappy-bird-tap-2d-computer-graphics-jump-bird-jum-flying-bird-9-frame-1-5Cadb87Ce10009_2147683715548888289216" type="Sprite2D" parent="Ocellordinador/ocell2"]
+position = Vector2(-24, -1.99994)
+scale = Vector2(-0.0983444, 0.107344)
+texture = ExtResource("7_krkh7")
+
+[connection signal="timeout" from="Escenari/Comptador" to="Escenari" method="_on_comptador_timeout"]
+[connection signal="timeout" from="Escenari/Comptador" to="Menu" method="_on_comptador_timeout"]
+[connection signal="timeout" from="Escenari/Comptador" to="OcellJugador/ocell" method="_on_comptador_timeout"]
+[connection signal="timeout" from="Escenari/Comptador" to="Ocellordinador/ocell2" method="_on_comptador_timeout"]
+[connection signal="visibility_changed" from="Menu" to="Menu" method="_on_visibility_changed"]
+[connection signal="pressed" from="Menu/JUGAR" to="Escenari" method="_on_jugar_pressed"]
+[connection signal="pressed" from="Menu/JUGAR" to="Menu" method="_on_jugar_pressed"]
+[connection signal="pressed" from="Menu/JUGAR" to="OcellJugador/ocell" method="_on_jugar_pressed"]
+[connection signal="pressed" from="Menu/JUGAR" to="Ocellordinador/ocell2" method="_on_jugar_pressed"]
+[connection signal="pressed" from="Menu/SORTIR" to="." method="_on_sortir_pressed"]
+[connection signal="pressed" from="Menu/SORTIR" to="Menu" method="_on_sortir_pressed"]
+[connection signal="body_entered" from="OcellJugador/ocell" to="." method="_on_ocell_body_entered"]
+[connection signal="body_entered" from="OcellJugador/ocell" to="Escenari" method="_on_ocell_body_entered"]
+[connection signal="body_entered" from="OcellJugador/ocell" to="OcellJugador/ocell" method="_on_body_entered"]
+[connection signal="body_entered" from="OcellJugador/ocell" to="Ocellordinador/ocell2" method="_on_ocell_body_entered"]
+[connection signal="body_entered" from="Ocellordinador/ocell2" to="." method="_on_ocell_2_body_entered"]
